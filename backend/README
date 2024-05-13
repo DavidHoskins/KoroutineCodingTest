@@ -1,0 +1,32 @@
+# Running the program
+From this location use command:
+- docker compose up --build
+
+# Running manually
+This will require running code locally so first make sure you've installed Python3 and pip3 run:
+- pip3 install -r requirements.txt
+Once those are done installing run from this location:
+- python3 -m main.py
+
+# Running tests
+Running tests require running code locally so first make sure you've installed Python3 and pip3 run:
+- pip3 install -r requirements.txt
+Then once all has installed run from this directory:
+- python3 -m unittest
+
+# Notes
+The backend uses websockets to communicate with the frontend for this reason you should make sure this project is running first to confirm all is working well.
+
+# Design Choices
+## Websockets?
+- The use of websockets here seemed a no-brainer due to wanting real-time feedback on the state of the webcrawler, although polling a restful api for status would still work the load on the server would be pretty high, instead the user can see the information in real time without having to wait on the restful api to finish it's request or make expensive calls to poll the api espcecially if no new information is avaliable yet for the user.
+
+## Asyncio & yield/sleep(0.0)
+- The focus of using these tools was to allow for the backend to handle more than one request at a time, since websockets are binding processes and web requests are slow it's important to allow the system to share resources between all users accessing this system.
+- However this system is not the best, I would suggest switching to a more segmented microservice model, where we can offload these bottlenecks to seperate programs, for instance I don't believe the websocket and crawler should be the same program but 2 different programs with real-time communication between themselves.
+
+## List comprehension over readability
+- Unfortunately python gets a large performance benefit using this method over explicitly assigning the elements of the array, therefore I had to ignore reading comprehension for performance, I have commented the usecases of these however to better explain their use cases and have taken the time to make sure they are covered by testing to confirm all is working as intended with those functions.
+
+## Docker
+- Docker was used for ease of development, by having docker I don't need to maintain a local environment and can always deploy on others systems, docker here is always welcome as we can now move it straight to deployment.

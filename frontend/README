@@ -1,0 +1,22 @@
+# Running the program
+From the folder location ./react_frontend use command:
+- docker compose up --build
+
+# Running build manually
+Install npm on your local machine and run this command from the folder location ./react_frontend:
+- npm install
+Once all the packages are done installing run this command to run the project:
+- npm start
+
+# Design choices
+## Docker
+- Docker used to help with deployment and development, with this file my project can now be run on any system so long as they have docker.
+
+## Web sockets
+- Web sockets for the front end does put more pressure on our frontend system, however it does avoid polling a restful api and all events received update the state of information for the user
+
+## Top down architecture
+- As you can see with WebcrawlerUI events and states are processed at the highest level and all updates to components are trickled down, this allows for sharing resources between components without too much of a nest of props, this also allows us to segment UI component responsibilities i.e. warning messages without losing out on compatibility and responsive.
+
+## Inline data checks
+- As with "this.props.data" inside the "CrawlerLog" component, I have included some checks for data validity within the rendering on components, while this could be somewhat messy in this case it stops us from rendering a component that would look out of place without the data itself, as well as helping with the robust nature of the code as it avoids visual bugs being visible to the end user which gives a higher quality feel to the end product.
